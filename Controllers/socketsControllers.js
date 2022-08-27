@@ -22,17 +22,20 @@ const socketController = (socket) => {
         usuarios.agregarPersona(socket.id, usuario.nombre, usuario.sala);
         
         socket.to(usuario.sala).emit('lista-personas', usuarios.getPersonasPorSala(usuario.sala));    // Emitir a todos los usuarios de la sala
-
+        socket.to(usuario.sala).emit('crear-mensaje', crearMensaje('Administrador', `${usuario.nombre} se conectó`));
         callback(usuarios.getPersonasPorSala(usuario.sala));
     });
 
 
 
-    socket.on('crear-mensaje', (payload) => {
+    socket.on('crear-mensaje', (payload, callback) => {
         let persona = usuarios.getPersona(socket.id);
         let mensaje = crearMensaje(persona.nombre, payload.mensaje);
         
         socket.to(persona.sala).emit('crear-mensaje', mensaje);
+        
+
+        callback(mensaje);
     })
     
     
