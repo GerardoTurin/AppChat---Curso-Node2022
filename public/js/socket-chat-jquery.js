@@ -8,6 +8,39 @@ const divUsuarios = $('#divUsuarios');
 const formEnviar = $('#formEnviar');
 const txtMensaje = $('#txtMensaje');
 const divChatbox = $('#divChatbox');
+const tituloSala = $('#tituloSala');
+
+
+
+//! Renderizar encabezado de la sala
+function renderizarSala(sala) {
+
+    let html = '';
+
+    /* 
+    <div class="p-20 b-b">
+        <h3 class="box-title">Sala de chat <small>Video Juegos</small></h3>
+    </div>
+    */
+
+    const div = document.createElement('div');
+    const h3 = document.createElement('h3');
+    const small = document.createElement('small');
+
+    div.className = 'p-20 b-b';
+    h3.className = 'box-title';
+    small.className = 'text-success';
+    h3.innerHTML = 'Sala de chat de ';
+    small.innerHTML = `${params.get('sala')}`;
+
+    h3.appendChild(small);
+    div.appendChild(h3);
+
+    html += div.outerHTML;
+
+    tituloSala.html(html);
+
+}
 
 
 //! Funsiones para renderizar usuarios
@@ -97,15 +130,15 @@ function renderizarMensajes(mensaje, yo) {
         div2.className = 'box bg-light-inverse';
         div4.className = 'chat-time';
 
-        h5.innerHTML = mensaje.nombre;
+        h5.innerHTML = 'Yo';
         div2.innerHTML = mensaje.mensaje;
         div4.innerHTML = hora;
 
         div1.appendChild(h5);
+        div1.appendChild(div2);
         div1.appendChild(div3);
         div1.appendChild(div4);
         li.appendChild(div1);
-        li.appendChild(div2);
     } else {
 
         /* 
